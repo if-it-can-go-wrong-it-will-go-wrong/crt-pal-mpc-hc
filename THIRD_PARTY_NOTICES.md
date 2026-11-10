@@ -36,7 +36,7 @@ The installed Adaptive sharpen file was reviewed at version 2015-06-25. Its noti
 
 ## Example screenshots
 
-These PNGs are captures of paused playback in MPC-HC with madVR. Each pair uses the same frame and output size. `no-shaders` disables the post-resize shader chain; `crt-pal` enables Adaptive sharpen followed by CRT PAL. The player interface and exterior pillarboxing were cropped identically. No source video or audio is distributed here. The shader's GPL license does not apply to the underlying films.
+These PNGs are captures of paused playback in MPC-HC with madVR. Each pair uses the same frame and output size. `no-shaders` disables the post-resize shader chain; `crt-pal` enables Adaptive sharpen followed by CRT PAL. The player interface and the area outside the displayed video were cropped identically. No source video or audio is distributed here. The shader's GPL license does not apply to the underlying films.
 
 ### Night on the Galactic Railroad (1985)
 

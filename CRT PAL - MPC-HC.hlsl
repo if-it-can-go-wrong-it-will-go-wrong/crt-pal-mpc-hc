@@ -116,17 +116,20 @@ float3 TubeColor(float2 uv, float2 outputUv, float spreadMask)
 float3 BezelColor(float2 warped, float distanceOutside)
 {
     // Mirror a narrow strip of the video against the lip of the tube.
-    float2 edgeUv = 0.5 + sign(warped) * (0.5 - abs(abs(warped) - 0.5));
-    float2 spread = float2(0.014, 0.018);
-    float3 reflected = (
-        SampleTap(edgeUv + spread) + SampleTap(edgeUv - spread) +
-        SampleTap(edgeUv + float2(spread.x, -spread.y)) +
-        SampleTap(edgeUv + float2(-spread.x, spread.y))) * 0.25;
+    float2 edgeDistance = abs(warped) - 0.5;
+    float2 edgeUv = 0.5 + sign(warped) * (0.5 - abs(edgeDistance));
+    // Keep a sample on the reflected ray so thin highlights cannot fall between taps.
+    // A narrow blur in output pixels keeps the reflection soft.
+    float2 spread = 2.5 * texelSize;
+    float3 reflected = 0.60 * SampleVideo(edgeUv) + 0.20 * (
+        SampleTap(edgeUv + spread) + SampleTap(edgeUv - spread));
 
     float lip = 1.0 - smoothstep(0.001, 0.007, distanceOutside);
-    float reflectionFalloff = 1.0 - smoothstep(0.004, 0.042, distanceOutside);
+    // At corners, account for the distance beyond both edges.
+    float cornerDistance = max(min(edgeDistance.x, edgeDistance.y), 0.0);
+    float reflectionFalloff = 1.0 - smoothstep(0.0, 0.042, distanceOutside + cornerDistance);
     float3 body = lerp(float3(0.021, 0.023, 0.026), float3(0.040, 0.042, 0.044), lip);
-    return body + reflected * reflectionFalloff * lerp(0.095, 0.22, lip);
+    return body + reflected * reflectionFalloff * lerp(0.20, 0.39, lip);
 }
 
 float4 main(float2 uv : TEXCOORD0, float2 position : VPOS) : COLOR

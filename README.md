@@ -39,7 +39,7 @@ CRT PAL can also be used with other output renderers that provide **MPC-HC-compa
 
 EVR Custom Presenter and Sync Renderer also provide legacy Direct3D 9 post-resize shader paths. Their compatibility with CRT PAL is inferred from those interfaces and has yet to be visually verified. See the [MPC-HC Direct3D 9 rendering code](https://github.com/clsid2/mpc-hc/blob/develop/src/filters/renderer/VideoRenderers/DX9RenderingEngine.cpp) and [Sync Renderer code](https://github.com/clsid2/mpc-hc/blob/develop/src/filters/renderer/VideoRenderers/SyncRenderer.cpp).
 
-The current source compiles to **508 instruction slots** for `ps_3_0` with the tested Windows SDK compilers, fitting the baseline 512-slot limit. Optimization was compared against the previous shader on the GPU at seven output sizes, from 1×1 to 4K, using gradients and noise patterns.
+The current source compiles to **512 instruction slots** for `ps_3_0` with the tested Windows SDK compilers, meeting the baseline Shader Model 3.0 limit. The earlier optimization was compared against the previous shader on the GPU at seven output sizes, from 1×1 to 4K, using gradients and noise patterns.
 
 The requirements are:
 
